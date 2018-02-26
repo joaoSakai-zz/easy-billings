@@ -1,39 +1,53 @@
-package model;
+package com.joaosakai.easybillings.model;
 
-import enumerations.Appearance;
-import enumerations.Fluidity;
-import enumerations.Sensation;
-import enumerations.Symbol;
+import com.joaosakai.easybillings.enumerations.Appearance;
+import com.joaosakai.easybillings.enumerations.Fluidity;
+import com.joaosakai.easybillings.enumerations.Sensation;
+import com.joaosakai.easybillings.enumerations.Symbol;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Calendar;
 
 @Entity
+@Table(name = "EB_MARKING")
 public class Marking {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "EB_SYMBOL")
+    @Column(columnDefinition = "varchar(20)")
+    @Enumerated(EnumType.STRING)
     private Symbol symbol;
 
-    @Column(name = "EB_MEETING")
+    @Column(columnDefinition = "boolean")
     private boolean meeting;
 
-    @Column(name = "EB_SENSATION")
+    @Column(columnDefinition = "varchar(20)")
+    @Enumerated(EnumType.STRING)
     private Sensation sensation;
 
-    @Column(name = "EB_APPEARANCE")
+    @Column(columnDefinition = "varchar(30)")
+    @Enumerated(EnumType.STRING)
     private Appearance appearance;
 
-    @Column(name = "EB_FLUIDITY")
+    @Column(columnDefinition = "varchar(25)")
+    @Enumerated(EnumType.STRING)
     private Fluidity fluidity;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "EB_CREATED_ON")
-    private LocalDate createdOn;
+    private Calendar createdOn;
 
+    public Marking() { }
+
+    public Marking(Symbol symbol, boolean meeting, Sensation sensation, Appearance appearance, Fluidity fluidity, Calendar createdOn) {
+        this.symbol = symbol;
+        this.meeting = meeting;
+        this.sensation = sensation;
+        this.appearance = appearance;
+        this.fluidity = fluidity;
+        this.createdOn = createdOn;
+    }
 
     public Integer getId() {
         return id;
@@ -83,11 +97,11 @@ public class Marking {
         this.fluidity = fluidity;
     }
 
-    public LocalDate getCreatedOn() {
+    public Calendar getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(LocalDate createdOn) {
+    public void setCreatedOn(Calendar createdOn) {
         this.createdOn = createdOn;
     }
 }
